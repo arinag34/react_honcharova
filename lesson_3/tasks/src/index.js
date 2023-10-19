@@ -1,8 +1,8 @@
-import React from 'react'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client';
 
 import App from './components/App'
 
-const rootElement = document.getElementById('app')
+import './css/dark-theme.css'
+import './css/light-theme.css'
 
-render(<App />, rootElement)
+createRoot(document.getElementById('app')).render(<App />)

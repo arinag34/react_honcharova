@@ -1,4 +1,4 @@
-body[data-theme="light"] {
+html[data-theme="light"] {
     background-color: #ffffff;
     color: #333333;
 }
