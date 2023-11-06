@@ -1,11 +1,21 @@
 import { Link, useLoaderData } from 'react-router-dom'
-
 import { List, ListItem, ListItemText, Typography } from '@mui/material'
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getUsers} from "../../store/slices/userSlice.js";
 
 const Users = () => {
-  const users = useLoaderData()
+    const {users, loading} = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getUsers());
+    }, [])
 
-  return (
+    if(loading){
+        return <h2>Loading...</h2>;
+    }
+
+    return (
     <>
       <Typography variant="h4" gutterBottom>
         Users
@@ -18,7 +28,7 @@ const Users = () => {
         ))}
       </List>
     </>
-  )
+    )
 }
 
 export { Users }

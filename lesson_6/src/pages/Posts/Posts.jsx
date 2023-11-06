@@ -1,11 +1,21 @@
-import { Link, useLoaderData } from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 import { List, ListItem, ListItemText, Typography } from '@mui/material'
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getPosts} from "../../store/slices/postSlice.js";
 
 const Posts = () => {
-  const posts = useLoaderData()
+    const {posts, loading} = useSelector((state) => state.post);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getPosts());
+    }, [])
 
-  return (
+    if(loading){
+        return <h2>Loading...</h2>;
+    }
+
+    return (
       <>
         <Typography variant="h4" gutterBottom>
           Posts
@@ -18,7 +28,7 @@ const Posts = () => {
           ))}
         </List>
       </>
-  )
+    )
 }
 
 export { Posts }

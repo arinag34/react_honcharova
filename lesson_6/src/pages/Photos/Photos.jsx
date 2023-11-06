@@ -1,15 +1,20 @@
-import { useLoaderData, useNavigation } from 'react-router-dom'
-
 import InfoIcon from '@mui/icons-material/Info'
 import { Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography } from '@mui/material'
-
 import { Loader } from '../../components/Loader/Loader.jsx'
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getPhotos} from "../../store/slices/photoSlice.js";
 
 const Photos = () => {
-  const photos = useLoaderData()
-  const navigation = useNavigation()
+    const {photos, loading} = useSelector((state) => state.photo);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getPhotos());
+    }, [])
 
-  const isLoading = navigation.state === 'loading'
+    if(loading){
+        return <h2>Loading...</h2>;
+    }
 
   return (
     <>
@@ -17,9 +22,6 @@ const Photos = () => {
         Photos
       </Typography>
       <Grid container spacing={2}>
-        {isLoading ? (
-          <Loader />
-        ) : (
           <ImageList cols={4} gap={16}>
             {photos.map((photo) => (
               <ImageListItem key={photo.id}>
@@ -35,7 +37,6 @@ const Photos = () => {
               </ImageListItem>
             ))}
           </ImageList>
-        )}
       </Grid>
     </>
   )
